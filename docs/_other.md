@@ -1,0 +1,191 @@
+# Other API
+
+Additional classes, interfaces, types, enums, and type aliases.
+
+- [AbstractInputSuggest](AbstractInputSuggest.md) — Attach to an `<input>` element or a `<div contentEditable>` to add type-ahead
+- [AbstractTextComponent](AbstractTextComponent.md) — class
+- [BaseComponent](BaseComponent.md) — class
+- [BasesAllOptions](BasesAllOptions.md) — BasesOptions and the associated sub-types are configuration-driven settings controls
+- [BasesConfigFile](BasesConfigFile.md) — Represents the serialized format of a Bases query as stored in a `.base` file.
+- [BasesConfigFileFilter](BasesConfigFileFilter.md) — type
+- [BasesConfigFileView](BasesConfigFileView.md) — interface
+- [BasesDropdownOption](BasesDropdownOption.md) — interface
+- [BasesEntry](BasesEntry.md) — Represent a single "row" or file in a base.
+- [BasesEntryGroup](BasesEntryGroup.md) — A group of BasesEntry objects for a given value of the groupBy key.
+- [BasesFileOption](BasesFileOption.md) — A text input allowing selection of a file from in the vault.
+- [BasesFolderOption](BasesFolderOption.md) — A text input allowing selection of a folder from in the vault.
+- [BasesFormulaOption](BasesFormulaOption.md) — A text input supporting formula evaluation.
+- [BasesMultitextOption](BasesMultitextOption.md) — interface
+- [BasesOption](BasesOption.md) — interface
+- [BasesOptionGroup](BasesOptionGroup.md) — Collapsible container for other ViewOptions.
+- [BasesOptions](BasesOptions.md) — type
+- [BasesProperty](BasesProperty.md) — A parsed version of the {@link BasesPropertyId}.
+- [BasesPropertyId](BasesPropertyId.md) — The full ID of a property, used in the bases config file. The prefixed
+- [BasesPropertyOption](BasesPropertyOption.md) — A dropdown menu allowing selection of a property.
+- [BasesPropertyType](BasesPropertyType.md) — The three valid "sources" of a property in a Base.
+- [BasesQueryResult](BasesQueryResult.md) — The BasesQueryResult contains all of the available information from executing the
+- [BasesSliderOption](BasesSliderOption.md) — interface
+- [BasesSortConfig](BasesSortConfig.md) — type
+- [BasesTextOption](BasesTextOption.md) — interface
+- [BasesToggleOption](BasesToggleOption.md) — interface
+- [BasesView](BasesView.md) — Plugins can create a class which extends this in order to render a Base.
+- [BasesViewConfig](BasesViewConfig.md) — The in-memory representation of a single entry in the "views" section of a Bases file.
+- [BasesViewFactory](BasesViewFactory.md) — Implement this factory function in a {@link BasesViewRegistration} to create a
+- [BasesViewRegistration](BasesViewRegistration.md) — Container for options when registering a new Bases view type.
+- [BlockCache](BlockCache.md) — interface
+- [BlockSubpathResult](BlockSubpathResult.md) — interface
+- [BooleanValue](BooleanValue.md) — {@link Value} wrapping a boolean.
+- [ButtonComponent](ButtonComponent.md) — class
+- [CachedMetadata](CachedMetadata.md) — interface
+- [CacheItem](CacheItem.md) — interface
+- [CapacitorAdapter](CapacitorAdapter.md) — Implementation of the vault adapter for mobile devices.
+- [CliData](CliData.md) — interface
+- [CliFlag](CliFlag.md) — interface
+- [CliFlags](CliFlags.md) — type
+- [CliHandler](CliHandler.md) — type
+- [CloseableComponent](CloseableComponent.md) — A closeable component that can get dismissed via the Android 'back' button.
+- [ColorComponent](ColorComponent.md) — Color picker component. Values are by default 6-digit hash-prefixed hex strings like `#000000`.
+- [Constructor](Constructor.md) — type
+- [DataAdapter](DataAdapter.md) — Work directly with files and folders inside a vault.
+- [DataWriteOptions](DataWriteOptions.md) — interface
+- [DateValue](DateValue.md) — {@link Value} wrapping a Date.
+- [Debouncer](Debouncer.md) — interface
+- [DropdownComponent](DropdownComponent.md) — class
+- [DurationValue](DurationValue.md) — {@link Value} wrapping a duration. Durations can be used to modify a {@link DateValue} or can
+- [EditableFileView](EditableFileView.md) — class
+- [EditorChange](EditorChange.md) — interface
+- [EditorCommandName](EditorCommandName.md) — type
+- [EditorPosition](EditorPosition.md) — interface
+- [EditorRange](EditorRange.md) — interface
+- [EditorRangeOrCaret](EditorRangeOrCaret.md) — interface
+- [EditorScrollInfo](EditorScrollInfo.md) — interface
+- [EditorSelection](EditorSelection.md) — interface
+- [EditorSelectionOrCaret](EditorSelectionOrCaret.md) — interface
+- [EditorSuggest](EditorSuggest.md) — class
+- [EditorSuggestContext](EditorSuggestContext.md) — interface
+- [EditorSuggestTriggerInfo](EditorSuggestTriggerInfo.md) — interface
+- [EditorTransaction](EditorTransaction.md) — interface
+- [EmbedCache](EmbedCache.md) — interface
+- [ExtraButtonComponent](ExtraButtonComponent.md) — class
+- [FileStats](FileStats.md) — interface
+- [FileValue](FileValue.md) — {@link Value} wrapping a file in Obsidian.
+- [FileView](FileView.md) — class
+- [FootnoteCache](FootnoteCache.md) — interface
+- [FootnoteRefCache](FootnoteRefCache.md) — interface
+- [FootnoteSubpathResult](FootnoteSubpathResult.md) — interface
+- [FormulaContext](FormulaContext.md) — The context in which a formula is evaluated. In most cases, {@link BasesEntry} is the specific type to use.
+- [FrontMatterCache](FrontMatterCache.md) — interface
+- [FrontMatterInfo](FrontMatterInfo.md) — interface
+- [FrontmatterLinkCache](FrontmatterLinkCache.md) — interface
+- [FuzzyMatch](FuzzyMatch.md) — interface
+- [HeadingCache](HeadingCache.md) — interface
+- [HeadingSubpathResult](HeadingSubpathResult.md) — interface
+- [HexString](HexString.md) — Hex strings are 6-digit hash-prefixed rgb strings in lowercase form.
+- [Hotkey](Hotkey.md) — interface
+- [HoverLinkSource](HoverLinkSource.md) — interface
+- [HoverParent](HoverParent.md) — interface
+- [HSL](HSL.md) — interface
+- [HTMLValue](HTMLValue.md) — {@link Value} wrapping raw HTML.
+- [IconName](IconName.md) — Can be any Lucide icon name or an internal icon name.
+- [IconValue](IconValue.md) — {@link Value} wrapping a renderable icon.
+- [ImageValue](ImageValue.md) — {@link Value} wrapping a path to an image resource in the vault.
+- [Instruction](Instruction.md) — interface
+- [ISuggestOwner](ISuggestOwner.md) — interface
+- [KeymapContext](KeymapContext.md) — interface
+- [KeymapEventHandler](KeymapEventHandler.md) — interface
+- [KeymapEventListener](KeymapEventListener.md) — Return `false` to automatically preventDefault
+- [KeymapInfo](KeymapInfo.md) — interface
+- [LinkCache](LinkCache.md) — interface
+- [LinkValue](LinkValue.md) — {@link Value} wrapping an internal wikilink.
+- [ListedFiles](ListedFiles.md) — interface
+- [ListItemCache](ListItemCache.md) — interface
+- [ListValue](ListValue.md) — {@link Value} wrapping an array of Values. Values do not all need to be of the same type.
+- [LivePreviewStateType](LivePreviewStateType.md) — The object stored in the view plugin {@link livePreviewState}
+- [Loc](Loc.md) — Location within a Markdown document
+- [MarkdownEditView](MarkdownEditView.md) — This is the editor for Obsidian Mobile as well as the WYSIWYG editor.
+- [MarkdownFileInfo](MarkdownFileInfo.md) — interface
+- [MarkdownPostProcessor](MarkdownPostProcessor.md) — A post processor receives an element which is a section of the preview.
+- [MarkdownPreviewEvents](MarkdownPreviewEvents.md) — interface
+- [MarkdownPreviewRenderer](MarkdownPreviewRenderer.md) — class
+- [MarkdownPreviewView](MarkdownPreviewView.md) — class
+- [MarkdownRenderChild](MarkdownRenderChild.md) — class
+- [MarkdownSectionInformation](MarkdownSectionInformation.md) — interface
+- [MarkdownSubView](MarkdownSubView.md) — interface
+- [MarkdownViewModeType](MarkdownViewModeType.md) — type
+- [MenuPositionDef](MenuPositionDef.md) — interface
+- [MenuSeparator](MenuSeparator.md) — class
+- [Modifier](Modifier.md) — Mod = Cmd on MacOS and Ctrl on other OS
+- [MomentFormatComponent](MomentFormatComponent.md) — class
+- [NotNullValue](NotNullValue.md) — Base type for all non-null {@link Values}.
+- [NullValue](NullValue.md) — {@link Value} which represents null.
+- [NumberValue](NumberValue.md) — {@link Value} wrapping a number.
+- [ObjectValue](ObjectValue.md) — {@link Value} wrapping an object.
+- [ObsidianProtocolData](ObsidianProtocolData.md) — interface
+- [ObsidianProtocolHandler](ObsidianProtocolHandler.md) — type
+- [OpenViewState](OpenViewState.md) — interface
+- [PaneType](PaneType.md) — type
+- [PluginManifest](PluginManifest.md) — Metadata about a Community plugin.
+- [Point](Point.md) — interface
+- [PopoverState](PopoverState.md) — enum
+- [PopoverSuggest](PopoverSuggest.md) — Base class for adding a type-ahead popover.
+- [Pos](Pos.md) — Describes a text range in a Markdown document.
+- [PrimitiveValue](PrimitiveValue.md) — Base type for {@link Values} which wrap a single primitive.
+- [ProgressBarComponent](ProgressBarComponent.md) — class
+- [QueryController](QueryController.md) — Responsible for executing the Bases query and evaluating filters and formulas.
+- [Reference](Reference.md) — Base interface for items that point to a different location.
+- [ReferenceCache](ReferenceCache.md) — interface
+- [ReferenceLinkCache](ReferenceLinkCache.md) — interface
+- [RegExpValue](RegExpValue.md) — {@link Value} wrapping a RegExp pattern.
+- [RelativeDateValue](RelativeDateValue.md) — {@link Value} wrapping a Date.
+- [RenderContext](RenderContext.md) — Utility functions for rendering Values within the app.
+- [RequestUrlParam](RequestUrlParam.md) — interface
+- [RequestUrlResponse](RequestUrlResponse.md) — interface
+- [RequestUrlResponsePromise](RequestUrlResponsePromise.md) — interface
+- [RGB](RGB.md) — interface
+- [Scope](Scope.md) — A scope receives keyboard events and binds callbacks to given hotkeys.
+- [SearchComponent](SearchComponent.md) — class
+- [SearchMatches](SearchMatches.md) — type
+- [SearchMatchPart](SearchMatchPart.md) — Text position offsets within text file. Represents
+- [SearchResult](SearchResult.md) — interface
+- [SearchResultContainer](SearchResultContainer.md) — interface
+- [SecretComponent](SecretComponent.md) — class
+- [SecretStorage](SecretStorage.md) — class
+- [SectionCache](SectionCache.md) — interface
+- [SettingGroup](SettingGroup.md) — class
+- [SettingTab](SettingTab.md) — class
+- [Side](Side.md) — type
+- [SliderComponent](SliderComponent.md) — class
+- [SplitDirection](SplitDirection.md) — type
+- [Stat](Stat.md) — interface
+- [StringValue](StringValue.md) — {@link Value} wrapping a string.
+- [SubpathResult](SubpathResult.md) — interface
+- [TagCache](TagCache.md) — interface
+- [TagValue](TagValue.md) — {@link Value} wrapping an Obsidian tag.
+- [Tasks](Tasks.md) — class
+- [TextAreaComponent](TextAreaComponent.md) — class
+- [TextComponent](TextComponent.md) — class
+- [TextFileView](TextFileView.md) — This class implements a plaintext-based editable file view, which can be loaded and saved given an editor.
+- [ToggleComponent](ToggleComponent.md) — class
+- [TooltipOptions](TooltipOptions.md) — interface
+- [TooltipPlacement](TooltipPlacement.md) — type
+- [UrlValue](UrlValue.md) — {@link Value} wrapping an external link.
+- [UserEvent](UserEvent.md) — type
+- [Value](Value.md) — Container type for data which can expose functions for retrieving, comparing, and rendering the data.
+- [ValueComponent](ValueComponent.md) — class
+- [ViewCreator](ViewCreator.md) — type
+- [ViewState](ViewState.md) — interface
+- [ViewStateResult](ViewStateResult.md) — interface
+- [WorkspaceContainer](WorkspaceContainer.md) — class
+- [WorkspaceFloating](WorkspaceFloating.md) — class
+- [WorkspaceItem](WorkspaceItem.md) — class
+- [WorkspaceMobileDrawer](WorkspaceMobileDrawer.md) — class
+- [WorkspaceParent](WorkspaceParent.md) — class
+- [WorkspaceRibbon](WorkspaceRibbon.md) — class
+- [WorkspaceRoot](WorkspaceRoot.md) — class
+- [WorkspaceSidedock](WorkspaceSidedock.md) — class
+- [WorkspaceSplit](WorkspaceSplit.md) — class
+- [WorkspaceTabs](WorkspaceTabs.md) — class
+- [WorkspaceWindow](WorkspaceWindow.md) — class
+- [WorkspaceWindowInitData](WorkspaceWindowInitData.md) — interface
+
+- [Functions](_functions.md) — Standalone utility functions

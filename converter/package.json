@@ -1,0 +1,12 @@
+{
+  "name": "obsidocs-converter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Convert obsidian.d.ts into per-class markdown files",
+  "scripts": {
+    "convert": "bun run convert.ts"
+  },
+  "dependencies": {
+    "ts-morph": "^24.0.0"
+  }
+}

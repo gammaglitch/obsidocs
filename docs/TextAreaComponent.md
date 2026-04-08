@@ -1,0 +1,3 @@
+# TextAreaComponent
+
+Extends: `AbstractTextComponent<HTMLTextAreaElement>`

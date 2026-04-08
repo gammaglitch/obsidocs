@@ -1,0 +1,3 @@
+# MarkdownPreviewEvents
+
+Extends: `Component`

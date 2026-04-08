@@ -1,0 +1,48 @@
+name: Update API Docs
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # weekly Monday 6am UTC
+  workflow_dispatch:       # manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+      - uses: oven-sh/setup-bun@v2
+      - name: Fetch upstream files
+        run: |
+          curl -fSL -o obsidian.d.ts \
+            https://raw.githubusercontent.com/obsidianmd/obsidian-api/master/obsidian.d.ts
+          curl -fSL -o upstream-package.json \
+            https://raw.githubusercontent.com/obsidianmd/obsidian-api/master/package.json
+      - name: Check version
+        id: version
+        run: |
+          VERSION=$(bun -e "console.log(require('./upstream-package.json').version)")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git tag -l "v$VERSION" | grep -q .; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install and convert
+        if: steps.version.outputs.skip == 'false'
+        run: |
+          cd converter
+          bun install --frozen-lockfile
+          bun run convert.ts ../obsidian.d.ts ../docs
+      - name: Commit and tag
+        if: steps.version.outputs.skip == 'false'
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          git add docs/
+          git diff --cached --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "docs: update to v${VERSION}"
+          git tag "v${VERSION}"
+          git push
+          git push --tags
