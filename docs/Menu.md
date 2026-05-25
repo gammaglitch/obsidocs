@@ -36,6 +36,12 @@ addSeparator(): this
 
 Adds a separator. Only works when menu is not shown yet.
 
+### setParentElement
+
+```ts
+setParentElement(el: HTMLElement): this
+```
+
 ### showAtMouseEvent
 
 ```ts

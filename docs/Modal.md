@@ -1,6 +1,6 @@
 # Modal
 Implements: `CloseableComponent`
-Extended by: `SuggestModal`
+Extended by: `ConfirmationModal`, `SuggestModal`
 
 ## Properties
 
@@ -22,7 +22,7 @@ Extended by: `SuggestModal`
 open(): void
 ```
 
-Show the modal on the active window. On mobile, the modal will animate on screen.
+Show the modal on the active window. On phones, the modal will animate on screen.
 
 ### close
 

@@ -10,12 +10,24 @@
 | `descEl` | `HTMLElement` |  |
 | `controlEl` | `HTMLElement` |  |
 | `components` | `BaseComponent[]` |  |
+| `errorEl` | `HTMLElement \| null` | Error message element shown below the input. Lives inside `controlEl` |
 
 ## Methods
+
+### setErrorMessage
+
+```ts
+setErrorMessage(message: string | null): this
+```
+
+Show a persistent validation error message below the setting. Pass an
+empty string or `null` to clear it. Adds the `is-invalid` class to the
+setting row when a message is present.
 
 ### setName
 
 ```ts
+setName(name: string): this
 setName(name: string | DocumentFragment): this
 ```
 

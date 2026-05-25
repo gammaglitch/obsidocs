@@ -1,5 +1,7 @@
 # SecretStorage
 
+Extends: `Events`
+
 ## Methods
 
 ### setSecret

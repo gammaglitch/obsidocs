@@ -1,5 +1,5 @@
 # Events
-Extended by: `MetadataCache`, `Vault`, `Workspace`, `WorkspaceItem`
+Extended by: `MetadataCache`, `SecretStorage`, `Vault`, `Workspace`, `WorkspaceItem`
 
 ## Methods
 

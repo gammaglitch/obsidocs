@@ -1,6 +1,7 @@
 # ButtonComponent
 
 Extends: `BaseComponent`
+Extended by: `ConfirmationButton`
 
 ## Properties
 
@@ -32,6 +33,22 @@ removeCta(): this
 
 ```ts
 setWarning(): this
+```
+
+### setDestructive
+
+```ts
+setDestructive(): this
+```
+
+Style the button as destructive (e.g. for actions that delete data or are
+otherwise hard to undo). Compose with {@link setCta} for a destructive
+primary action.
+
+### removeDestructive
+
+```ts
+removeDestructive(): this
 ```
 
 ### setTooltip

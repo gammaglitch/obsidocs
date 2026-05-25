@@ -10,6 +10,7 @@ Extends: `Component`
 |------|------|-------------|
 | `app` | `App` |  |
 | `manifest` | `PluginManifest` |  |
+| `settings` | `unknown` | Plugin settings. Assign loaded data here in `onload`. Declare a |
 
 ## Methods
 

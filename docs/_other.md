@@ -45,6 +45,8 @@ Additional classes, interfaces, types, enums, and type aliases.
 - [CliHandler](CliHandler.md) — type
 - [CloseableComponent](CloseableComponent.md) — A closeable component that can get dismissed via the Android 'back' button.
 - [ColorComponent](ColorComponent.md) — Color picker component. Values are by default 6-digit hash-prefixed hex strings like `#000000`.
+- [ConfirmationButton](ConfirmationButton.md) — A button inside a {@link ConfirmationModal}'s button row. Clicking the button
+- [ConfirmationModal](ConfirmationModal.md) — A modal that asks the user to confirm an action. Use {@link addButton} to add
 - [Constructor](Constructor.md) — type
 - [DataAdapter](DataAdapter.md) — Work directly with files and folders inside a vault.
 - [DataWriteOptions](DataWriteOptions.md) — interface
@@ -151,8 +153,32 @@ Additional classes, interfaces, types, enums, and type aliases.
 - [SecretComponent](SecretComponent.md) — class
 - [SecretStorage](SecretStorage.md) — class
 - [SectionCache](SectionCache.md) — interface
+- [SettingColorControl](SettingColorControl.md) — interface
+- [SettingControl](SettingControl.md) — type
+- [SettingControlBase](SettingControlBase.md) — interface
+- [SettingDefinition](SettingDefinition.md) — type
+- [SettingDefinitionAction](SettingDefinitionAction.md) — interface
+- [SettingDefinitionAddItem](SettingDefinitionAddItem.md) — Configuration for a {@link SettingDefinitionList}'s `addItem` affordance.
+- [SettingDefinitionBase](SettingDefinitionBase.md) — interface
+- [SettingDefinitionControl](SettingDefinitionControl.md) — interface
+- [SettingDefinitionEmpty](SettingDefinitionEmpty.md) — interface
+- [SettingDefinitionGroup](SettingDefinitionGroup.md) — A group of settings rendered under a shared heading. Used as an inline
+- [SettingDefinitionItem](SettingDefinitionItem.md) — A single item in the array returned by `getSettingDefinitions()`.
+- [SettingDefinitionList](SettingDefinitionList.md) — A specialized {@link SettingDefinitionGroup} for collections of mutable
+- [SettingDefinitionPage](SettingDefinitionPage.md) — A declarative page of settings rendered as a navigable entry.
+- [SettingDefinitionRender](SettingDefinitionRender.md) — interface
+- [SettingDropdownControl](SettingDropdownControl.md) — interface
+- [SettingFileControl](SettingFileControl.md) — File-path input with a vault file suggester. Persists the selected file's
+- [SettingFolderControl](SettingFolderControl.md) — Folder-path input with a vault folder suggester. Persists the selected folder's
 - [SettingGroup](SettingGroup.md) — class
+- [SettingGroupItem](SettingGroupItem.md) — A single item within a SettingDefinitionGroup — either a setting or a navigable page.
+- [SettingNumberControl](SettingNumberControl.md) — Numeric text input. Persists a number; falls back to `defaultValue` (or `0`) if the
+- [SettingPage](SettingPage.md) — Base class for a sub-page within a {@link SettingTab}. Use with the `page`
+- [SettingSliderControl](SettingSliderControl.md) — interface
 - [SettingTab](SettingTab.md) — class
+- [SettingTextAreaControl](SettingTextAreaControl.md) — Multi-line text input. Persists a string.
+- [SettingTextControl](SettingTextControl.md) — interface
+- [SettingToggleControl](SettingToggleControl.md) — interface
 - [Side](Side.md) — type
 - [SliderComponent](SliderComponent.md) — class
 - [SplitDirection](SplitDirection.md) — type

@@ -1,5 +1,11 @@
 # SettingGroup
 
+## Properties
+
+| Name | Type | Description |
+|------|------|-------------|
+| `listEl` | `HTMLElement` |  |
+
 ## Methods
 
 ### setHeading
