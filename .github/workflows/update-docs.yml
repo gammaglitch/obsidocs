@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write   # needed to push the docs commit and version tag
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-tags: true
       - uses: oven-sh/setup-bun@v2
