@@ -1,6 +1,7 @@
 # Common API
 
 Core classes and interfaces used in most Obsidian plugins.
+See `_atlas.md` for a domain-grouped map of the full API.
 
 - [App](App.md) — class
 - [Command](Command.md) — interface

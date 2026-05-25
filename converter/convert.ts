@@ -15,6 +15,96 @@ const COMMON_NAMES = new Set([
   "HoverPopover", "FileSystemAdapter",
 ]);
 
+// Atlas domain grouping. Curated members take precedence; anything not listed is
+// placed by heuristicDomain(), which always resolves to a known domain (falling
+// back to "Other") so every class/interface has exactly one home.
+interface AtlasDomain {
+  title: string;
+  blurb: string;
+  members: string[]; // curated core members, in display order
+}
+
+const ATLAS_DOMAINS: AtlasDomain[] = [
+  {
+    title: "Plugin & lifecycle",
+    blurb: "Entry points and the component lifecycle everything builds on.",
+    members: ["Plugin", "App", "Component", "PluginManifest", "PluginSettingTab"],
+  },
+  {
+    title: "Files & vault",
+    blurb: "Reading, writing, watching, and resolving files and folders.",
+    members: ["Vault", "TAbstractFile", "TFile", "TFolder", "FileManager", "FileSystemAdapter", "DataAdapter", "DataWriteOptions", "FileStats"],
+  },
+  {
+    title: "Workspace & views",
+    blurb: "Panes, leaves, and the view classes that render content into them.",
+    members: ["Workspace", "WorkspaceLeaf", "WorkspaceItem", "WorkspaceParent", "WorkspaceSplit", "WorkspaceTabs", "WorkspaceSidedock", "WorkspaceMobileDrawer", "WorkspaceWindow", "WorkspaceRibbon", "View", "ItemView", "FileView", "EditableFileView", "MarkdownView", "MarkdownFileInfo"],
+  },
+  {
+    title: "Editor & Markdown rendering",
+    blurb: "Editing document text and rendering Markdown to the DOM.",
+    members: ["Editor", "EditorPosition", "EditorRange", "EditorSelection", "EditorSelectionOrCaret", "EditorChange", "EditorTransaction", "MarkdownRenderer", "MarkdownRenderChild", "MarkdownPreviewView", "MarkdownPreviewRenderer", "MarkdownPostProcessor", "MarkdownPostProcessorContext", "MarkdownSectionInformation"],
+  },
+  {
+    title: "Settings & UI components",
+    blurb: "Setting rows and the reusable input widgets they hold.",
+    members: ["Setting", "BaseComponent", "ValueComponent", "AbstractTextComponent", "TextComponent", "TextAreaComponent", "ToggleComponent", "DropdownComponent", "SliderComponent", "ButtonComponent", "ExtraButtonComponent", "ColorComponent", "SearchComponent", "ProgressBarComponent", "MomentFormatComponent"],
+  },
+  {
+    title: "Modals & suggesters",
+    blurb: "Dialogs and type-ahead pickers.",
+    members: ["Modal", "SuggestModal", "FuzzySuggestModal", "AbstractInputSuggest", "PopoverSuggest", "ISuggestOwner", "FuzzyMatch", "HoverPopover", "HoverParent"],
+  },
+  {
+    title: "Commands, menus & notices",
+    blurb: "Command palette entries, context menus, and transient notifications.",
+    members: ["Command", "Hotkey", "Menu", "MenuItem", "MenuSeparator", "Notice"],
+  },
+  {
+    title: "Events & keymap",
+    blurb: "Event registration/dispatch and keyboard handling.",
+    members: ["Events", "EventRef", "Keymap", "KeymapContext", "KeymapInfo", "KeymapEventHandler", "KeymapEventListener", "Scope", "UserEvent"],
+  },
+  {
+    title: "Metadata cache",
+    blurb: "Parsed metadata about notes: links, headings, tags, frontmatter.",
+    members: ["MetadataCache", "CachedMetadata", "FrontMatterCache", "FrontmatterLinkCache", "LinkCache", "EmbedCache", "HeadingCache", "TagCache", "ReferenceCache", "BlockCache", "SectionCache", "ListItemCache", "FootnoteCache", "FootnoteRefCache", "FileCache"],
+  },
+  {
+    title: "Networking & platform",
+    blurb: "HTTP requests, secret storage, and runtime platform detection.",
+    members: ["RequestUrlParam", "RequestUrlResponse", "RequestUrlResponsePromise", "Platform", "SecretStorage", "CapacitorAdapter"],
+  },
+  {
+    title: "Bases",
+    blurb: "The Bases query engine and its configuration-driven view options.",
+    members: [], // filled by the Bases* heuristic
+  },
+  {
+    title: "Other",
+    blurb: "Everything not covered by a domain above.",
+    members: [], // heuristic fallback
+  },
+];
+
+// Map a class/interface name to a domain title when it isn't curated. Every
+// return value must be an ATLAS_DOMAINS title; callers route unknown titles to
+// "Other" defensively.
+function heuristicDomain(name: string): string {
+  if (name.startsWith("Bases")) return "Bases";
+  if (name.endsWith("Component")) return "Settings & UI components";
+  if (name.startsWith("Setting")) return "Settings & UI components";
+  if (name.endsWith("Modal")) return "Modals & suggesters";
+  if (name.endsWith("Suggest") || name.endsWith("Suggester")) return "Modals & suggesters";
+  if (name.endsWith("View")) return "Workspace & views";
+  if (name.startsWith("Workspace")) return "Workspace & views";
+  if (name.endsWith("Cache")) return "Metadata cache";
+  if (name.startsWith("Markdown")) return "Editor & Markdown rendering";
+  if (name.includes("Editor")) return "Editor & Markdown rendering";
+  if (name.startsWith("Keymap")) return "Events & keymap";
+  return "Other";
+}
+
 // --- Types ---
 
 interface DocEntry {
@@ -320,6 +410,109 @@ function generateTypeAliasDoc(ta: TypeAliasDeclaration): DocEntry {
   return { name, kind: "type", content: lines.join("\n") + "\n" };
 }
 
+// --- Atlas ---
+
+// Auto-derived inheritance forest: roots are parents that aren't themselves
+// children. Only trees with >= 3 nodes are shown; a global visited set keeps
+// each node to a single appearance (interfaces can have multiple parents).
+function buildInheritanceTrees(childMap: Map<string, string[]>, existingNames: Set<string>): string {
+  const childOf = new Set<string>();
+  for (const kids of childMap.values()) for (const k of kids) childOf.add(k);
+  const roots = [...childMap.keys()].filter(p => !childOf.has(p));
+
+  const size = (name: string, seen = new Set<string>()): number => {
+    if (seen.has(name)) return 0;
+    seen.add(name);
+    let n = 1;
+    for (const k of childMap.get(name) ?? []) n += size(k, seen);
+    return n;
+  };
+
+  const meaningful = roots
+    .map(r => ({ r, n: size(r) }))
+    .filter(x => x.n >= 3)
+    .sort((a, b) => b.n - a.n || a.r.localeCompare(b.r))
+    .map(x => x.r);
+
+  if (meaningful.length === 0) return "";
+
+  const visited = new Set<string>();
+  const lines: string[] = ["## Inheritance trees", "", "Hierarchies derived from `extends`/`implements` (a node's children derive from it)."];
+
+  const render = (name: string, depth: number) => {
+    if (visited.has(name)) return;
+    visited.add(name);
+    const indent = "  ".repeat(depth);
+    const link = existingNames.has(name) ? `[${name}](${name}.md)` : `\`${name}\``;
+    lines.push(`${indent}- ${link}`);
+    for (const k of (childMap.get(name) ?? []).slice().sort((a, b) => a.localeCompare(b))) render(k, depth + 1);
+  };
+
+  for (const root of meaningful) {
+    lines.push("");
+    render(root, 0);
+  }
+
+  return lines.join("\n");
+}
+
+function generateAtlas(
+  entries: DocEntry[],
+  childMap: Map<string, string[]>,
+  sourceFile: SourceFile
+): string {
+  const existingNames = new Set(entries.filter(e => !e.name.startsWith("_")).map(e => e.name));
+  const kindByName = new Map(entries.map(e => [e.name, e.kind] as const));
+  const knownTitles = new Set(ATLAS_DOMAINS.map(d => d.title));
+
+  // Assign each entry to exactly one domain: curated first, then heuristic.
+  const domainOf = new Map<string, string>();
+  for (const d of ATLAS_DOMAINS) {
+    for (const m of d.members) {
+      if (existingNames.has(m) && !domainOf.has(m)) domainOf.set(m, d.title);
+    }
+  }
+  for (const name of existingNames) {
+    if (domainOf.has(name)) continue;
+    const dom = heuristicDomain(name);
+    domainOf.set(name, knownTitles.has(dom) ? dom : "Other");
+  }
+
+  const byDomain = new Map<string, string[]>();
+  for (const [name, dom] of domainOf) {
+    if (!byDomain.has(dom)) byDomain.set(dom, []);
+    byDomain.get(dom)!.push(name);
+  }
+
+  const lines: string[] = [
+    "# API Atlas",
+    "",
+    "Orientation map for the Obsidian API: classes and interfaces grouped by what",
+    "they're for, followed by the main inheritance trees. Find the right area here,",
+    "then open `<Name>.md` for the full surface. For the exhaustive alphabetical",
+    "listing see `_common.md` and `_other.md`.",
+  ];
+
+  const entryLine = (name: string): string => {
+    const desc = getDescriptionForIndex(sourceFile, name) || kindByName.get(name) || "";
+    return `- [${name}](${name}.md)${desc ? ` — ${desc}` : ""}`;
+  };
+
+  for (const d of ATLAS_DOMAINS) {
+    const names = byDomain.get(d.title);
+    if (!names || names.length === 0) continue;
+    const curatedHere = d.members.filter(m => names.includes(m));
+    const rest = names.filter(n => !d.members.includes(n)).sort((a, b) => a.localeCompare(b));
+    lines.push("", `## ${d.title}`, "", d.blurb, "");
+    for (const name of [...curatedHere, ...rest]) lines.push(entryLine(name));
+  }
+
+  const trees = buildInheritanceTrees(childMap, existingNames);
+  if (trees) lines.push("", trees);
+
+  return lines.join("\n") + "\n";
+}
+
 // --- Main ---
 
 function main() {
@@ -445,7 +638,7 @@ function main() {
   common.sort((a, b) => a.name.localeCompare(b.name));
   other.sort((a, b) => a.name.localeCompare(b.name));
 
-  const commonLines = ["# Common API", "", "Core classes and interfaces used in most Obsidian plugins.", ""];
+  const commonLines = ["# Common API", "", "Core classes and interfaces used in most Obsidian plugins.", "See `_atlas.md` for a domain-grouped map of the full API.", ""];
   for (const e of common) {
     const desc = getDescriptionForIndex(sourceFile, e.name);
     commonLines.push(`- [${e.name}](${e.name}.md) — ${desc || e.kind}`);
@@ -460,6 +653,9 @@ function main() {
   otherLines.push("", `- [Functions](_functions.md) — Standalone utility functions`);
   fs.writeFileSync(path.join(outputDir, "_other.md"), otherLines.join("\n") + "\n", "utf-8");
 
+  // Atlas: domain-grouped orientation map + inheritance trees
+  fs.writeFileSync(path.join(outputDir, "_atlas.md"), generateAtlas(entries, childMap, sourceFile), "utf-8");
+
   // Stats
   const classCount = entries.filter(e => e.kind === "class").length;
   const ifaceCount = entries.filter(e => e.kind === "interface").length;
@@ -471,7 +667,7 @@ function main() {
   console.log(`  ${classCount} classes, ${ifaceCount} interfaces, ${enumCount} enums, ${typeCount} type aliases`);
   console.log(`  ${common.length} common, ${other.length - (funcs.length > 0 ? 0 : 0)} other`);
   if (funcs.length > 0) console.log(`  ${funcs.length} standalone functions in _functions.md`);
-  console.log(`  Index files: _common.md, _other.md`);
+  console.log(`  Index files: _common.md, _other.md, _atlas.md`);
 }
 
 function getDescriptionForIndex(sourceFile: SourceFile, name: string): string {

@@ -5,6 +5,7 @@ Pre-built markdown API reference generated from Obsidian's `obsidian.d.ts`. One 
 ## What's in `docs/`
 
 - One `.md` file per exported class, interface, enum, or type alias
+- `_atlas.md` — orientation map: every class grouped by domain (files, workspace, editor, settings, …) plus the main inheritance trees
 - `_common.md` — index of ~30 core plugin-dev classes
 - `_other.md` — index of everything else
 - `_functions.md` — standalone exported functions
